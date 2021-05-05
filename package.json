@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon",
     "run": "node .",
-    "build": "npm install"
+    "build": "npm install",
+    "start": "npm run build && npm run run"
   },
   "keywords": [],
   "author": "Team ScripTS",
