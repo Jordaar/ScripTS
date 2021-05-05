@@ -11,7 +11,7 @@ const infoEmbed = require("./Embeds/Info_Embed");
 
 async function paginate(message, embeds) {
     const { author, channel } = message;
-    embeds.map((e, i) => e.setFooter(`Page -> ${i++ + 1} | ${embeds.length}`))
+    embeds.map((e, i) => e.setFooter(`Page -> ${++i} | ${embeds.length}`))
     embeds.push(infoEmbed);
 
     const m = new Pagination.Embeds()
