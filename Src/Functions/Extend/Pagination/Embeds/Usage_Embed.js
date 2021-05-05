@@ -9,5 +9,6 @@ const usage = new MessageEmbed()
         .addField("...", "This is also chained with <> or []. Example: [argument...]\nThis means that you can have **multiple** arguments.")
         .addField("\u200B", "> ⚠ **Note: Do not type in the brackets**.\n> ❓ **Still confused?** Join our [Support Server](https://discord.gg/fd44xNFnxS).")
         .setFooter("Usage Page")
+        .setColor("#191A26");
 
 module.exports = usage;

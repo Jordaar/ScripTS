@@ -21,7 +21,6 @@ async function paginate(message, embeds) {
         .setTimeout(1000 * 60 * 5)
         .setPageIndicator(false)
         .setPage(1)
-        .setColor("#191A26")
         .setTimestamp()
         .setDisabledNavigationEmojis(["all"])
         .setClientAssets({ prompt: `To what page would you like to go?` })
