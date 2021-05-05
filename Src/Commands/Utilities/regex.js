@@ -21,13 +21,17 @@ async function execute(client, message, args, text, instance) {
     const strMsg = await getResponse(message,"Please enter the test string",60000,true,true).then(m => m.delete());
     const str = strMsg.content;
 
-    let matches = str.match(regex);
+    let matches = regex.global ? [...str.matchAll(regex)] :str.match(regex);
+
     instance.send(message,
         new MessageEmbed()
         .setColor('BLUE')
         .setTitle("Regex Utility")
         .addField('Regex',`\`\`\`${regex}\`\`\``)
         .addField('Test String',`\`\`\`${str}\`\`\``)
-        .addField('Matches Found',matches ? matches.map(m => `\`${m}\``).join(', ') : "none")
+        .addField('Matches Found', "```" + (matches ? matches.map((m,index) => {
+            if(typeof m == 'object') return `(#${index+1}) Match -> ${m.shift()}` + (m.length > 0 ? (`\n     Capturing Groups -> ` + m.join(', ')) : '') + '\n';
+            return `(#${index+1}) ${m}`;
+        }).join('\n') : "none") + "```")
         ,'embed')
 }
