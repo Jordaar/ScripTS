@@ -24,6 +24,8 @@
     "node-cache": "^5.1.2",
     "nodemon": "^2.0.7",
     "pretty-ms": "^7.0.1",
+    "regex-parser": "^2.2.11",
+    "safe-eval": "^0.4.1",
     "table": "^6.6.0"
   }
 }

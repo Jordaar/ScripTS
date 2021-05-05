@@ -6,7 +6,7 @@ module.exports = {
     eventsDir: "./Src/Events",
     devConfig: {
         enabled: false,
-        owners: ["803491655515635763", "477649356191825920"],
+        owners: ["803491655515635763", "477649356191825920", "461756834353774592"],
         guild: '838824533036367872',
         debug: false
     },

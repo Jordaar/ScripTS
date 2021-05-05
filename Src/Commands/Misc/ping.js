@@ -6,7 +6,8 @@ module.exports = {
 }
 
 async function execute(client, message, args, text, instance) {
+    const time = Date.now();  
     const msg = await instance.send(message, "Pong!", "string");
-    const ping = msg.createdTimestamp - message.createdTimestamp;
+    const ping = Date.now() - time;
     await msg.edit(`Pong! \`${Math.abs(ping)}ms\``)
 }
