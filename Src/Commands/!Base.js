@@ -61,5 +61,5 @@ async function execute(client, message, args, text, instance) {
 
     returns paginationObject // refer www.npmjs.com/package/discord-paginationembed
     */
-    instance.paginate(message , embeds)
+    instance.paginate(message, embeds)
 }

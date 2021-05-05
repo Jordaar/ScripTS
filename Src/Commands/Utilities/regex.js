@@ -46,6 +46,6 @@ async function execute(client, message, args, text, instance) {
                 if (typeof m == 'object') return `(#${index + 1}) Match -> ${m.shift()}` + (m.length > 0 ? (`\n     Capturing Groups -> ` + m.join(', ')) : '') + '\n';
                 return `(#${index + 1}) ${m}`;
             }).join('\n') : "No Matches") + "```", false)
-            .setFooter(`Requested by ${message.author.tag}`,message.author.avatarURL({dynamic: true}))
+            .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
         , 'embed');
 }
