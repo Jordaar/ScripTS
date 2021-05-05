@@ -77,15 +77,16 @@ function embed(text, type) {
             break;
 
         default:
-            embed.setDescription(`${config.static.emojis.success} ${text || "Success"}`)
-                .setColor(config.static.color.success);
+            embed.setDescription(`${text || "Success"}`);
             break;
     }
     return embed;
 }
 
 module.exports = {
+    config: config,
     send: send,
     embed: embed,
-    paginate: require("./Pagination/paginate")
+    paginate: require("./Pagination/paginate"),
+    getResponse: require("./Utils/getResponse")
 }

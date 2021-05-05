@@ -25,7 +25,6 @@ module.exports = (client) => {
         if (!content.toLowerCase().startsWith(prefix)) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
-        const text = message.content.slice(prefix.length).trim();
         const commandName = args.shift().toLowerCase();
         const cmd = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
         if (!cmd) return;
@@ -87,7 +86,7 @@ module.exports = (client) => {
             }
         });
         if (requiredPermMember.map(x => x.missing).includes(false)) return instance.send(message, instance.embed(`You require the following perms in order to use this command:\n${requiredPermMember.filter(x => !x.missing).map(x => x.raw).join("\n")}`, "error"));
-
+        const text = args.join(" ");
         cmd.execute(client, message, args, text, instance);
     });
 
@@ -103,7 +102,6 @@ module.exports = (client) => {
         if (!content.toLowerCase().startsWith(prefix)) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
-        const text = message.content.slice(prefix.length).trim();
         const commandName = args.shift().toLowerCase();
         const cmd = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
         if (!cmd) return;
@@ -165,7 +163,7 @@ module.exports = (client) => {
             }
         });
         if (requiredPermMember.map(x => x.missing).includes(false)) return instance.send(message, instance.embed(`You require the following perms in order to use this command:\n${requiredPermMember.filter(x => !x.missing).map(x => x.raw).join("\n")}`, "error"));
-
+        const text = args.join(" ");
         cmd.execute(client, message, args, text, instance);
     })
 }
