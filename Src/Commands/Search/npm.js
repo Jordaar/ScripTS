@@ -73,7 +73,7 @@ async function createChart(packageData) {
                 options: {
                     title: {
                         display: true,
-                        text: `${packageData.name} | Download Stats`,
+                        text: `Download stats for ${packageData.name}`,
                         fontColor: "#F04947"
                     },
                     legend: {

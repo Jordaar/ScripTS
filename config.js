@@ -19,7 +19,7 @@ module.exports = {
         color: {
             "success": "#43B581",
             "error": "#F04947",
-            "info": "#FFFFFF"
+            "info": "#7289DA"
         }
     }
 }

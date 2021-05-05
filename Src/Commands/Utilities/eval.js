@@ -5,36 +5,32 @@ const clean = text => ((typeof text === "string") ? text.replace(/`/g, "`" + Str
 module.exports = {
     name: "eval",
     category: "Utilities",
-    description: "Sanitized public eval command... Evaluates javascript code",
+    description: "Sanitized public eval command, evaluates javascript code.",
     cooldon: 10,
     usage: "<code>",
     execute: execute
 }
 
 async function execute(client, message, args, text, instance) {
-    if(args.length < 0) instance.send(message,instance.embed("Please re-run the command along with the code to evaluate!"),"string")
+    if (!args[0]) instance.send(message, instance.embed("Please re-run the command along with the code to evaluate!"), "embed")
 
+    const startTime = Date.now();
     let output;
     let status = true;
-
-    try{
-        const code = args.join(' ');
+    try {
+        const code = text;
         let evaled = safeEval(code);
-
         if (evaled instanceof Promise) evaled = await evaled;
         else if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
-
         output = clean(evaled);
-
     } catch (err) {
         status = false;
         output = err.toString();
     }
-
-    return instance.send(message,new MessageEmbed({
-        color: status ? 'GREEN' : 'RED',
-        title: "Evaluated code",
-        description: `\`\`\`js\n${output}\`\`\``
-    }),"embed")
-    
+    const embed = new MessageEmbed()
+        .setAuthor("Evaluate JS Code", status ? "https://iili.io/BxVFZF.png" : "https://iili.io/BxV3j1.png")
+        .setColor(status ? instance.config.static.color.success : instance.config.static.color.error)
+        .setDescription(`\`\`\`js\n${output}\n\`\`\``)
+        .setFooter(`Time Taken − ${Math.abs(Date.now() - startTime)} ms`)
+    instance.send(message, embed, "embed")
 }
