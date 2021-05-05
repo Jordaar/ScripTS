@@ -76,6 +76,11 @@ function embed(text, type) {
                 .setColor(config.static.color.info);
             break;
 
+        case "loading":
+            embed.setDescription(`${config.static.emojis.loading} ${text || "Loading"}`)
+                .setColor(config.static.color.loading);
+            break;
+
         default:
             embed.setDescription(`${text || "Success"}`);
             break;
@@ -88,5 +93,5 @@ module.exports = {
     send: send,
     embed: embed,
     paginate: require("./Pagination/paginate"),
-    getResponse: require("./Utils/getResponse")
+    prompt: require("./Utils/prompt")
 }
