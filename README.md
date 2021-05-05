@@ -1,2 +1,0 @@
-# ScripTS Team Bot
-## **WIP**!
