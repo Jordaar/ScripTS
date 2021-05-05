@@ -7,6 +7,7 @@ module.exports = {
     description: "Sanitized public eval command, evaluates javascript code.",
     cooldon: 10,
     usage: "<code>",
+    aliases: ['evaluate'],
     execute: execute
 }
 
