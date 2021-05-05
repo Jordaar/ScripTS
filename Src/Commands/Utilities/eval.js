@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const safeEval = require('safe-eval');
+const safeEval = require('notevil');
 const clean = text => ((typeof text === "string") ? text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203)) : text);
 
 module.exports = {
