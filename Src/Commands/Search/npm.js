@@ -1,4 +1,4 @@
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, MessageEmbed, MessageAttachment } = require("discord.js");
 const npmSearch = require('libnpmsearch');
 const moment = require("moment");
 const fetch = require("node-fetch");
@@ -18,14 +18,14 @@ module.exports = {
  * @param {Client} client 
  * @param {Message} message 
  * @param {Array} args 
- * @param {String} text 
  * @param {*} instance 
  */
 
-async function execute(client, message, args, text, instance) {
+async function execute(client, message, args, instance) {
+    if (instance.command.isEdited) return;
     const { guild, channel, author, member } = message;
     if (!args[0]) return instance.send(message, instance.embed("Please provide a package name to search.", "error"), "embed")
-    const search = await npmSearch(text);
+    const search = await npmSearch(args.join(" "));
     if (search.length == 0) return instance.send(message, instance.embed(`Unable to find a package with the name "${text}"`, "error"), "embed")
     const package = search[0];
 
@@ -41,9 +41,12 @@ async function execute(client, message, args, text, instance) {
         .setColor("#CB0000");
 
     const chart = await createChart(package);
-    if (chart) embed.setImage(chart);
+    if (chart !== undefined) {
+        embed.attachFiles(chart);
+        embed.setImage(`attachment://chart.png`);
+    }
 
-    instance.send(message, embed, "embed")
+    channel.send(embed);
 }
 
 async function createChart(packageData) {
@@ -51,7 +54,7 @@ async function createChart(packageData) {
         const startDate = moment().subtract("1", "year");
         let data = await fetch(`https://npm-stat.com/api/download-counts?package=${packageData.name}&from=${startDate.format("YYYY-MM-DD")}&until=${moment().format("YYYY-MM-DD")}`)
         data = await data.json();
-        let arrayData = Object.entries(data[packageData.name]);
+        let arrayData = Object.entries(data[Object.keys(data)[0]]);
 
         const chart = new chartJS()
             .setConfig({
@@ -92,10 +95,11 @@ async function createChart(packageData) {
                 }
             })
             .setBackgroundColor("#1E1E1E");
-        const chartUrl = await chart.getShortUrl();
-        return chartUrl;
+        const buffer = await chart.toBinary();
+        const attachment = new MessageAttachment(buffer, `chart.png`);
+        return attachment;
     } catch (e) {
         console.log(e);
-        return false;
+        return undefined;
     }
 }
