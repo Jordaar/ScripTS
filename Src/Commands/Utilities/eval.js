@@ -25,7 +25,7 @@ module.exports = {
     execute: execute
 }
 
-async function execute(client, message, args, text, instance) {
+async function execute(client, message, args, instance) {
     if (!args[0]) return instance.send(message, instance.embed("Please re-run the command along with the code to evaluate!", 'error'), "embed")
 
     const startTime = Date.now();

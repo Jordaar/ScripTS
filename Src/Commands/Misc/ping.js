@@ -5,7 +5,7 @@ module.exports = {
     execute: execute
 }
 
-async function execute(client, message, args, text, instance) {
+async function execute(client, message, args, instance) {
     const time = Date.now();
     const msg = await instance.send(message, "Pong!", "string");
     const ping = Date.now() - time;

@@ -18,7 +18,7 @@ module.exports = {
  * @param {*} instance 
  */
 
-async function execute(client, message, args, text, instance) {
+async function execute(client, message, args, instance) {
     const response = await instance.prompt(message, instance.embed("Please provide a regular expression.", "loading"));
     let regex;
     try {
