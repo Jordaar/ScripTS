@@ -44,7 +44,7 @@ async function send(message, payload, type) {
 
             setTimeout(() => {
                 client.exeCmd.delete(message.id)
-            }, 1000 * 60 * 5);
+            }, 1000 * 60 * 1);
         }
         return outMsg;
     } catch (e) {
