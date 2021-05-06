@@ -14,12 +14,14 @@ module.exports = {
         emojis: {
             "success": "<:Success:839021779221086289>",
             "error": "<:Error:839021864033583144>",
-            "info": "<:Info:839027748512989224>"
+            "info": "<:Info:839027748512989224>",
+            "loading": "<a:loading:839462583740137472>"
         },
         color: {
             "success": "#43B581",
             "error": "#F04947",
-            "info": "#7289DA"
+            "info": "#7289DA",
+            "loading": "#2F303A"
         }
     }
 }

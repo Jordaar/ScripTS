@@ -26,7 +26,7 @@ module.exports = {
 }
 
 async function execute(client, message, args, text, instance) {
-    if (!args[0]) return instance.send(message, instance.embed("Please re-run the command along with the code to evaluate!",'error'), "embed")
+    if (!args[0]) return instance.send(message, instance.embed("Please re-run the command along with the code to evaluate!", 'error'), "embed")
 
     const startTime = Date.now();
     let output;
@@ -34,18 +34,18 @@ async function execute(client, message, args, text, instance) {
     let logs = [];
 
     const psuedoConsole = {
-        log: (t) => {logs.push(t); return;},
-        error: (t) => {logs.push(t); return;},
-        warn: (t) => {logs.push(t); return;},
+        log: (t) => { logs.push(t); return; },
+        error: (t) => { logs.push(t); return; },
+        warn: (t) => { logs.push(t); return; },
     };
 
     try {
         const code = text;
-        let evaled = safeEval(code,{console: psuedoConsole});
+        let evaled = safeEval(code, { console: psuedoConsole });
         if (evaled instanceof Promise) evaled = await evaled;
         else if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
         evaled = clean(evaled);
-        if(!evaled || evaled == 'undefined') evaled = logs.map(p => typeof p !== "string" ? require("util").inspect(p) : p).join('\n');
+        if (!evaled || evaled == 'undefined') evaled = logs.map(p => typeof p !== "string" ? require("util").inspect(p) : p).join('\n');
         output = evaled;
     } catch (err) {
         status = false;
@@ -55,14 +55,14 @@ async function execute(client, message, args, text, instance) {
     const endTime = Date.now();
     let chunks = chunk(output.split(''));
 
-    let embeds = chunks.map((text,index) => {
+    let embeds = chunks.map((text, index) => {
         text = text.join('');
         return new MessageEmbed()
-        .setAuthor("Evaluate JS Code", status ? "https://iili.io/BxVFZF.png" : "https://iili.io/BxV3j1.png")
-        .setColor(status ? instance.config.static.color.success : instance.config.static.color.error)
-        .setDescription(`\`\`\`js\n${text}\n\`\`\``)
-        .setFooter(`Time Taken − ${Math.abs(endTime - startTime)} ms`,message.author.avatarURL({dynamic: true}))
+            .setAuthor("Evaluate JS Code", status ? "https://iili.io/BxVFZF.png" : "https://iili.io/BxV3j1.png")
+            .setColor(status ? instance.config.static.color.success : instance.config.static.color.error)
+            .setDescription(`\`\`\`js\n${text}\n\`\`\``)
+            .setFooter(`Time Taken − ${Math.abs(endTime - startTime)} ms`, message.author.avatarURL({ dynamic: true }))
     })
 
-    return embeds.length > 1 ? instance.paginate(message, embeds) : instance.send(message, embeds[0], 'embed');    
+    return embeds.length > 1 ? instance.paginate(message, embeds) : instance.send(message, embeds[0], 'embed');
 }

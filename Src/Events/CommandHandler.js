@@ -3,6 +3,7 @@ const moment = require("moment");
 const prettyMS = require("pretty-ms");
 const config = require("../../config");
 const instance = require("../Functions/Extend/instance");
+const guildSchema = require("../Database/Schemas/guildSchema");
 
 const cooldown = new Set();
 
@@ -11,7 +12,14 @@ const cooldown = new Set();
  * @param {Client} client 
  */
 
-module.exports = (client) => {
+module.exports = async (client) => {
+
+    const guildConfig = await guildSchema.find({});
+
+    client.guilds.cache.forEach((guild) => {
+        const thisGuild = guildConfig.find(g => g.guildId == guild.id);
+        client.prefix.set(guild.id, thisGuild ? thisGuild.prefix : config.prefix);
+    })
 
     client.on("message", (message) => {
         const { author, channel, guild, content, member } = message;
@@ -21,7 +29,7 @@ module.exports = (client) => {
         if (!guild) return;
 
         const mentionRegex = new RegExp(`^<@!?${client.user.id}> `);
-        var prefix = content.match(mentionRegex) ? content.match(mentionRegex)[0] : config.prefix;
+        const prefix = content.match(mentionRegex) ? content.match(mentionRegex)[0] : client.prefix.get(guild.id) || config.prefix;
         if (!content.toLowerCase().startsWith(prefix)) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
@@ -98,7 +106,7 @@ module.exports = (client) => {
         const { author, channel, guild, content } = message;
         if (!content) return;
         const mentionRegex = new RegExp(`^<@!?${client.user.id}> `);
-        var prefix = content.match(mentionRegex) ? content.match(mentionRegex)[0] : config.prefix;
+        const prefix = content.match(mentionRegex) ? content.match(mentionRegex)[0] : client.prefix.get(guild.id) || config.prefix;
         if (!content.toLowerCase().startsWith(prefix)) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/g);

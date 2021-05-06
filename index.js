@@ -11,6 +11,7 @@ const client = new DiscordJS.Client({
     partials: ['CHANNEL', 'MESSAGE', 'REACTION', 'GUILD_MEMBER', 'USER']
 });
 
+client.prefix = new DiscordJS.Collection();
 client.commands = new DiscordJS.Collection();
 client.events = 0;
 client.exeCmd = new DiscordJS.Collection();
@@ -46,9 +47,10 @@ async function load() {
         .on("warn", (info) => console.log(info))
 
     mongoose.connect(config.mongoDB, {
+        keepAlive: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useFindAndModify: true
+        useFindAndModify: false
     }).then(() => {
         console.log(chalk.yellow("MongoDB > Connected"));
     }).catch((err) => {
