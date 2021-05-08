@@ -2,6 +2,7 @@ module.exports = {
     token: process.env.TOKEN,
     prefix: "?",
     mongoDB: process.env.MONGO_DB,
+    apiUrl: "https://api.scripts-bot.cf",
     commandsDir: "./Src/Commands",
     eventsDir: "./Src/Events",
     devConfig: {

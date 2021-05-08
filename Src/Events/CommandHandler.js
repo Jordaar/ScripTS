@@ -107,7 +107,6 @@ module.exports = async (client) => {
     client.on("messageUpdate", async (oldMessage, message) => {
         const command = client.exeCmd.get(message.id);
         if (!command) return;
-        console.log("Edited Command")
         const { author, channel, guild, content } = message;
         if (!content) return;
         const mentionRegex = new RegExp(`^<@!?${client.user.id}> `);
