@@ -33,6 +33,7 @@ module.exports = async (client) => {
         if (!content.toLowerCase().startsWith(prefix)) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
+        message.text = message.content.slice(prefix.length).replace(args[0], "").trim();
         const commandName = args.shift().toLowerCase();
         const cmd = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
         if (!cmd) return;
@@ -114,6 +115,7 @@ module.exports = async (client) => {
         if (!content.toLowerCase().startsWith(prefix)) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
+        message.text = message.content.slice(prefix.length).replace(args[0], "").trim();
         const commandName = args.shift().toLowerCase();
         const cmd = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
         if (!cmd) return;
