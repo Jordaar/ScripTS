@@ -16,7 +16,7 @@ async function execute(client, message, args, instance) {
     const msg = await instance.send(message, instance.embed("Contacting remote server, please wait.", "loading"), "embed");
 
     const startTime = Date.now();
-    const evaluated = await goEval(message.content.split(" ").slice(1).join(" "));
+    const evaluated = await goEval(message.text);
     if (!evaluated.status) return msg.edit(instance.embed("External server error, please try again later.", 'error'));
 
     let status = true;

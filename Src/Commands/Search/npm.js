@@ -22,7 +22,7 @@ module.exports = {
 async function execute(client, message, args, instance) {
     const { guild, channel, author, member } = message;
     if (!args[0]) return instance.send(message, instance.embed("Please provide a package name to search.", "error"), "embed")
-    const search = await npmSearch(args.join(" "));
+    const search = await npmSearch(message.text);
     if (search.length == 0) return instance.send(message, instance.embed(`Unable to find a package with the name "${text}"`, "error"), "embed")
     const package = search[0];
 

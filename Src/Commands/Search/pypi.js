@@ -13,7 +13,7 @@ module.exports = {
 
 async function execute(client, message, args, instance) {
     if (!args[0]) return instance.send(message, instance.embed("Please provide a project name to search.", "error"), "embed")
-    const res = await fetchPypi(args[0]);
+    const res = await fetchPypi(message.text);
     if (!res.status) return instance.send(message, instance.embed("Unable to find any pypi projects.", "error"), "embed")
 
     const embed = new MessageEmbed()
@@ -31,7 +31,7 @@ async function execute(client, message, args, instance) {
 
     if (res.info.home_page && res.info.home_page.startsWith("https://github.com")) {
         const split = res.info.home_page.replace("https://github.com/", "").split("/")
-        embed.setImage(`${instance.config.apiUrl}/github-repo?username=${split[0]}&repo=${split[1]}&hide_border=true&theme=tokyonight`)
+        embed.setImage(`${instance.config.apiUrl}/github-repo?username=${split[0]}&repo=${split[1].replace(".git", "")}&hide_border=true&theme=tokyonight`)
     }
 
     instance.send(message, embed, "embed")

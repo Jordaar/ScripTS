@@ -56,7 +56,7 @@ async function execute(client, message, args, instance) {
     let chunks = chunk(output.split(''));
 
     let embeds = chunks.map((text, index) => {
-        text = message.content.split(" ").slice(1).join(" ");
+        text = message.text;
         return new MessageEmbed()
             .setAuthor("Evaluate JavaScript Code", status ? "https://iili.io/BxVFZF.png" : "https://iili.io/BxV3j1.png")
             .setColor(status ? instance.config.static.color.success : instance.config.static.color.error)
