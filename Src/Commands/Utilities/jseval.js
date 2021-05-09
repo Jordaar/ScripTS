@@ -40,7 +40,7 @@ async function execute(client, message, args, instance) {
     };
 
     try {
-        const code = text;
+        const code = message.text;
         let evaled = safeEval(code, { console: psuedoConsole });
         if (evaled instanceof Promise) evaled = await evaled;
         else if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
