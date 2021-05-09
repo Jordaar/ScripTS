@@ -26,7 +26,7 @@ async function execute(client, message, args, instance) {
         .setAuthor("Visual Studio Code Marketplace", "https://iili.io/BTQFAx.png", "https://marketplace.visualstudio.com")
         .setTitle(extension.displayName)
         .setURL(`https://marketplace.visualstudio.com/items?itemName=${extension.publisher.publisherName}.${extension.extensionName}`)
-        .setThumbnail(extension.versions[0].files.find(f => f.assetType == "Microsoft.VisualStudio.Services.Icons.Default" || f.assetType == "Microsoft.VisualStudio.Services.Icons.Small").source)
+        .setThumbnail(extension.versions[0].files.find(f => f.assetType == "Microsoft.VisualStudio.Services.Icons.Default" || f.assetType == "Microsoft.VisualStudio.Services.Icons.Small") ? extension.versions[0].files.find(f => f.assetType == "Microsoft.VisualStudio.Services.Icons.Default" || f.assetType == "Microsoft.VisualStudio.Services.Icons.Small").source : "https://iili.io/BuFyiu.png")
         .setDescription(extension.shortDescription || "No Description")
         .addField("Version", extension.versions[0].version, true)
         .addField("Author", extension.publisher.displayName, true)
@@ -40,16 +40,6 @@ async function execute(client, message, args, instance) {
 
     }
     embed.addField("Statistics", stats.map(x => `> ${x}`).join("\n") || "None", false);
-
-    try {
-        //const username = extension.publisher.publisherName;
-        // No Github repo data provided by the API
-
-        // TODO: Create Custom Canvas
-
-        //const repoName = extension.extensionName.toLowerCase().startsWith("vscode-") ? extension.extensionName.toLowerCase() : `vscode-${extension.extensionName.toLowerCase()}`;
-        //embed.setImage(`https://api.scripts-bot.cf/github-repo?username=${username}&repo=${repoName}&theme=react&hide_border=true`)
-    } catch (e) { }
 
     instance.send(message, embed, "embed")
 }
