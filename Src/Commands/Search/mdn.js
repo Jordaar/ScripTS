@@ -1,13 +1,12 @@
 const { MessageEmbed, Util } = require("discord.js");
 const fetch = require('node-fetch');
-const moment = require("moment");
 
 const API_BASE = 'https://developer.mozilla.org';
 
 module.exports = {
     name: "mdn",
     category: "Search",
-    description: "Searche thorugh [mdn](https://developer.mozilla.org) docs.",
+    description: "Searches thorugh [mdn](https://developer.mozilla.org) docs.",
     usage: "<query>",
     cooldown: 10,
     execute
