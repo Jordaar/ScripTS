@@ -18,6 +18,7 @@
     "axios": "^0.21.1",
     "chalk": "^3.0.0",
     "chartjs-to-image": "^1.0.4",
+    "cheerio": "*",
     "discord-paginationembed": "^2.1.0",
     "discord.js": "^12.5.3",
     "discordjs-prompter": "^2.0.4",
