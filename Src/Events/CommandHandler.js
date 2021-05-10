@@ -2,7 +2,7 @@ const { Client, Collection } = require("discord.js");
 const moment = require("moment");
 const prettyMS = require("pretty-ms");
 const config = require("../../config");
-const instance = require("../Functions/Extend/instance");
+let instance = require("../Functions/Extend/instance");
 const guildSchema = require("../Database/Schemas/guildSchema");
 
 const cooldown = new Set();
@@ -33,6 +33,7 @@ module.exports = async (client) => {
         if (!content.toLowerCase().startsWith(prefix)) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
+        message.text = message.content.slice(prefix.length).replace(args[0], "").trim();
         const commandName = args.shift().toLowerCase();
         const cmd = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
         if (!cmd) return;
@@ -94,15 +95,19 @@ module.exports = async (client) => {
             }
         });
         if (requiredPermMember.map(x => x.missing).includes(false)) return instance.send(message, instance.embed(`You require the following perms in order to use this command:\n${requiredPermMember.filter(x => !x.missing).map(x => x.raw).join("\n")}`, "error"));
-        const text = args.join(" ");
-        cmd.execute(client, message, args, text, instance);
+
+        instance.command = {
+            ...options,
+            prefix: prefix,
+            isEdited: false
+        }
+
+        cmd.execute(client, message, args, instance);
     });
 
-    const exeCmd = client.exeCmd;
     client.on("messageUpdate", async (oldMessage, message) => {
-        const command = exeCmd.get(message.id);
+        const command = client.exeCmd.get(message.id);
         if (!command) return;
-
         const { author, channel, guild, content } = message;
         if (!content) return;
         const mentionRegex = new RegExp(`^<@!?${client.user.id}> `);
@@ -110,6 +115,7 @@ module.exports = async (client) => {
         if (!content.toLowerCase().startsWith(prefix)) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
+        message.text = message.content.slice(prefix.length).replace(args[0], "").trim();
         const commandName = args.shift().toLowerCase();
         const cmd = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
         if (!cmd) return;
@@ -171,7 +177,13 @@ module.exports = async (client) => {
             }
         });
         if (requiredPermMember.map(x => x.missing).includes(false)) return instance.send(message, instance.embed(`You require the following perms in order to use this command:\n${requiredPermMember.filter(x => !x.missing).map(x => x.raw).join("\n")}`, "error"));
-        const text = args.join(" ");
-        cmd.execute(client, message, args, text, instance);
+
+        instance.command = {
+            ...options,
+            prefix: prefix,
+            isEdited: false
+        }
+
+        cmd.execute(client, message, args, instance);
     })
 }

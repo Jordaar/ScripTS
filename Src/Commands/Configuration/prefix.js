@@ -9,7 +9,7 @@ module.exports = {
     execute
 }
 
-async function execute(client, message, args, text, instance) {
+async function execute(client, message, args, instance) {
     const { guild } = message;
     if (!args[0]) return instance.send(message, instance.embed(`My prefix in this server is **${client.prefix.get(guild.id)}** and ${guild.me.toString()}.\n> Use: ${client.prefix.get(guild.id)}prefix newPrefix to change the prefix!`, "info").setFooter("Replace newPrefix with the desired prefix."));
     const guildConfig = await guildSchema.findOne({ guildId: guild.id });

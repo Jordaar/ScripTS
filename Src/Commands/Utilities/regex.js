@@ -18,8 +18,8 @@ module.exports = {
  * @param {*} instance 
  */
 
-async function execute(client, message, args, text, instance) {
-    const response = await instance.prompt(message, instance.embed("Please provide a regular expression.", "loading"));
+async function execute(client, message, args, instance) {
+    const response = await instance.prompt(message, instance.embed("Please provide a regular expression.", "loading")).catch(_ => { });
     let regex;
     try {
         regex = parseRegex(response.first().content);
@@ -30,7 +30,7 @@ async function execute(client, message, args, text, instance) {
     }
     if (regex === null) return;
 
-    const response2 = await instance.prompt(message, instance.embed("Please provide a string to evaluate the regular expression with.", "loading"));
+    const response2 = await instance.prompt(message, instance.embed("Please provide a string to evaluate the regular expression with.", "loading")).catch(_ => { });
     const str = response2.first().content;
     if (response2.first().deletable) response2.first().delete();
     const matches = regex.global ? [...str.matchAll(regex)] : str.match(regex);
@@ -45,6 +45,6 @@ async function execute(client, message, args, text, instance) {
                 if (typeof m == 'object') return `(#${index + 1}) Match -> ${m.shift()}` + (m.length > 0 ? (`\n     Capturing Groups -> ` + m.join(', ')) : '') + '\n';
                 return `(#${index + 1}) ${m}`;
             }).join('\n') : "No Matches") + "```", false)
-            .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL({ dynamic: true }))
+            .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
         , 'embed');
 }

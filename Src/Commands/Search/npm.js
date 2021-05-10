@@ -1,8 +1,6 @@
-const { Client, Message, MessageEmbed } = require("discord.js");
+const { Client, Message, MessageEmbed, MessageAttachment } = require("discord.js");
 const npmSearch = require('libnpmsearch');
 const moment = require("moment");
-const fetch = require("node-fetch");
-const chartJS = require("chartjs-to-image");
 
 module.exports = {
     name: "npm",
@@ -18,14 +16,13 @@ module.exports = {
  * @param {Client} client 
  * @param {Message} message 
  * @param {Array} args 
- * @param {String} text 
  * @param {*} instance 
  */
 
-async function execute(client, message, args, text, instance) {
+async function execute(client, message, args, instance) {
     const { guild, channel, author, member } = message;
     if (!args[0]) return instance.send(message, instance.embed("Please provide a package name to search.", "error"), "embed")
-    const search = await npmSearch(text);
+    const search = await npmSearch(message.text);
     if (search.length == 0) return instance.send(message, instance.embed(`Unable to find a package with the name "${text}"`, "error"), "embed")
     const package = search[0];
 
@@ -40,62 +37,9 @@ async function execute(client, message, args, text, instance) {
         .addField("Maintainers", package.maintainers ? package.maintainers.map(m => m.username).join(", ") : "None")
         .setColor("#CB0000");
 
-    const chart = await createChart(package);
-    if (chart) embed.setImage(chart);
-
-    instance.send(message, embed, "embed")
-}
-
-async function createChart(packageData) {
     try {
-        const startDate = moment().subtract("1", "year");
-        let data = await fetch(`https://npm-stat.com/api/download-counts?package=${packageData.name}&from=${startDate.format("YYYY-MM-DD")}&until=${moment().format("YYYY-MM-DD")}`)
-        data = await data.json();
-        let arrayData = Object.entries(data[packageData.name]);
+        embed.setImage(instance.config.apiUrl + `/npm?package=${package.name}`)
+    } catch (e) { }
 
-        const chart = new chartJS()
-            .setConfig({
-                type: "line",
-                data: {
-                    labels: arrayData.map((x, i) => i),
-                    datasets: [
-                        {
-                            data: arrayData.map(x => x[1]),
-                            backgroundColor: "#171717",
-                            fill: true,
-                            borderWidth: 2,
-                            borderColor: "#F04947",
-                            pointRadius: 0,
-                            lineTension: 0.2
-                        }
-                    ],
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: `Download stats for ${packageData.name}`,
-                        fontColor: "#F04947"
-                    },
-                    legend: {
-                        display: false,
-                    },
-                    scales: {
-                        xAxes: [{
-                            display: false
-                        }],
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: false
-                            }
-                        }]
-                    }
-                }
-            })
-            .setBackgroundColor("#1E1E1E");
-        const chartUrl = await chart.getShortUrl();
-        return chartUrl;
-    } catch (e) {
-        console.log(e);
-        return false;
-    }
+    instance.send(message, embed, "embed");
 }

@@ -16,16 +16,16 @@ const chunk = (array, chunkSize = 2000) => {
 }
 
 module.exports = {
-    name: "eval",
+    name: "jseval",
     category: "Utilities",
     description: "Sanitized public eval command, evaluates javascript code.",
     cooldon: 10,
     usage: "<code>",
-    aliases: ['evaluate'],
+    aliases: ['jsevaluate', "js-eval", "javascript-eval"],
     execute: execute
 }
 
-async function execute(client, message, args, text, instance) {
+async function execute(client, message, args, instance) {
     if (!args[0]) return instance.send(message, instance.embed("Please re-run the command along with the code to evaluate!", 'error'), "embed")
 
     const startTime = Date.now();
@@ -40,7 +40,7 @@ async function execute(client, message, args, text, instance) {
     };
 
     try {
-        const code = text;
+        const code = message.text;
         let evaled = safeEval(code, { console: psuedoConsole });
         if (evaled instanceof Promise) evaled = await evaled;
         else if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
@@ -56,12 +56,12 @@ async function execute(client, message, args, text, instance) {
     let chunks = chunk(output.split(''));
 
     let embeds = chunks.map((text, index) => {
-        text = text.join('');
+        text = message.text;
         return new MessageEmbed()
-            .setAuthor("Evaluate JS Code", status ? "https://iili.io/BxVFZF.png" : "https://iili.io/BxV3j1.png")
+            .setAuthor("Evaluate JavaScript Code", status ? "https://iili.io/BxVFZF.png" : "https://iili.io/BxV3j1.png")
             .setColor(status ? instance.config.static.color.success : instance.config.static.color.error)
             .setDescription(`\`\`\`js\n${text}\n\`\`\``)
-            .setFooter(`Time Taken − ${Math.abs(endTime - startTime)} ms`, message.author.avatarURL({ dynamic: true }))
+            .setFooter(`Time Taken − ${Math.abs(endTime - startTime)} ms`, message.author.displayAvatarURL({ dynamic: true }))
     })
 
     return embeds.length > 1 ? instance.paginate(message, embeds) : instance.send(message, embeds[0], 'embed');
