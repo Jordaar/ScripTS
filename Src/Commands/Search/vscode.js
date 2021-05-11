@@ -13,7 +13,7 @@ module.exports = {
     execute: execute
 }
 
-const cache = new nodeCache({ stdTTL: 1000 * 60 * 5, checkperiod: 1000 * 60 * 1 / 2 });
+const cache = new nodeCache();
 async function execute(client, message, args, instance) {
     if (!args[0]) return instance.send(message, instance.embed("Please provide a extension name to search.", "error"), "embed");
     const loading = await instance.send(message, instance.embed("Finding the extension, please wait.", "loading"), "embed");
