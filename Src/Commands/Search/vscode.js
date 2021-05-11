@@ -1,7 +1,6 @@
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed  , Collection} = require("discord.js");
 const axios = require("axios");
 const moment = require("moment");
-const nodeCache = require("node-cache");
 
 module.exports = {
     name: "vscode",
@@ -13,7 +12,7 @@ module.exports = {
     execute: execute
 }
 
-const cache = new nodeCache();
+const cache = new Collection();
 async function execute(client, message, args, instance) {
     if (!args[0]) return instance.send(message, instance.embed("Please provide a extension name to search.", "error"), "embed");
     const loading = await instance.send(message, instance.embed("Finding the extension, please wait.", "loading"), "embed");
@@ -26,7 +25,7 @@ async function execute(client, message, args, instance) {
         res = await getExtension(message.text);
         cache.set(message.text.toLowerCase(), res);
     }
-
+    
     if (!res.status) return loading.edit(instance.embed("An error occured while processing your request.", "error"));
     if (res.results.length == 0) return loading.edit(instance.embed("Unble to find any search results for the given query.", "error"));
     if (res.results[0].extensions.length == 0) return loading.edit(instance.embed("Unble to find any search results for the given query.", "error"));
