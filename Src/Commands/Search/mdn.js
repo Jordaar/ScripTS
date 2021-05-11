@@ -21,7 +21,7 @@ async function execute(client, message, args, instance) {
     let embeds = [];
     const embed = new MessageEmbed()
         .setAuthor("MDN Documentation", "https://iili.io/BufHXt.jpg", "https://developer.mozilla.org")
-        .setColor("#F9F8F8")
+        .setColor("#A19B9B")
         .setTitle("Contents")
         .setURL(`${API_BASE}/search?q=${encodeURI(message.text)}`)
         .setDescription(res.documents.slice(0, 15).map((d, i) => `\`${++i})\` [${d.title}](${API_BASE}${d.mdn_url})`).join("\n"));
