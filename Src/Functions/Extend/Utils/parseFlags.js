@@ -30,7 +30,7 @@ function parseFlags(text) {
     output.sanitizedText = sanitizeText(text, output.flags);
 
     output.get = function (key) {
-        const find = output.flags.find(f => f.key == key);
+        const find = output.flags.find(f => f.key.toLowerCase() == key);
         if (find) return find.value;
         return undefined;
     }
