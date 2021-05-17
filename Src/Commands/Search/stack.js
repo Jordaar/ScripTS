@@ -7,7 +7,7 @@ module.exports = {
     name: "stack",
     aliases: ["stackoverflow", "stack-overflow"],
     category: "Search",
-    description: "Searches thorugh [Stack Overflow](https://stackoverflow.com).",
+    description: "Searches through [Stack Overflow](https://stackoverflow.com).",
     usage: "<query> [--tagged=tag1;tag2]",
     cooldown: 15,
     execute

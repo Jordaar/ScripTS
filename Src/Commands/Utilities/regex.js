@@ -3,7 +3,7 @@ const parseRegex = require('regex-parser');
 
 module.exports = {
     name: "regex",
-    category: "Utilities",
+    category: "Utility",
     description: "Used to test regular expressions.",
     cooldon: 5,
     execute: execute

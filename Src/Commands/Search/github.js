@@ -15,7 +15,7 @@ module.exports = {
     name: "github",
     aliases: ["git"],
     category: "Search",
-    description: "Searches thorugh [Github](https://github.com/about).",
+    description: "Searches through [Github](https://github.com/about).",
     usage: `<query> [${flags.join(" | ")}]`,
     cooldown: 10,
     execute
@@ -29,11 +29,14 @@ async function execute(client, message, args, instance) {
     let res = { status: false }
 
     if (cache.has(message.text.toLowerCase())) {
-        res = cache.get(message.text.toLowerCase())
+        res = cache.get(message.text.toLowerCase());
+        setTimeout(() => {
+            cache.delete(message.text.toLowerCase())
+        }, 1000 * 5);
     }
     else {
         res = await searchGithub(message.text);
-        cache.set(message.text.toLowerCase() , res);
+        cache.set(message.text.toLowerCase(), res);
     }
     if (!res.status) return instance.send(message, instance.embed(`Unable to find any results for the given query, use flags to search for a specific type: [${flags.join(" | ")}]`, "error"), "embed")
 
