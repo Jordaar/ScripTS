@@ -6,7 +6,7 @@ const API_BASE = 'https://developer.mozilla.org';
 module.exports = {
     name: "mdn",
     category: "Search",
-    description: "Searches through [mdn](https://developer.mozilla.org) docs.",
+    description: "Searches [MDN](https://developer.mozilla.org) docs.",
     usage: "<query>",
     cooldown: 10,
     execute

@@ -5,7 +5,7 @@ const moment = require("moment");
 module.exports = {
     name: "npm",
     category: "Search",
-    description: "Search for [npm](https://www.npmjs.com) packages.",
+    description: "Searches [NPM](https://www.npmjs.com) packages.",
     usage: "<packageName> [--card]",
     cooldown: 10,
     execute

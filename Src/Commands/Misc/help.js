@@ -5,6 +5,7 @@ module.exports = {
     name: "help",
     category: "Misc",
     description: "Shows the help menu of the bot.",
+    usage: "[commandName]",
     execute: execute
 }
 
@@ -18,7 +19,7 @@ async function execute(client, message, args, instance) {
     });
 
     const helpMenu = new MessageEmbed()
-        .setColor(instance.config.static.color.info)
+        .setColor("#191A26")
         .setAuthor(message.member.displayName, message.author.displayAvatarURL())
         .setDescription(`Hey there 👋. I am ${client.user.username}.\nRun ${prefix}help <commandName> for info about each command.`);
 
@@ -35,7 +36,7 @@ async function execute(client, message, args, instance) {
         if (!cmd) return instance.send(message, helpMenu, "embed");
 
         const cmdMenu = new MessageEmbed()
-            .setColor(instance.config.static.color.info)
+            .setColor("#191A26")
             .setTitle(`Command: ${prefix}${cmd.name}`)
             .setDescription(cmd.description || "No description.")
             .addField("Category", cmd.category || "Unknown", true)

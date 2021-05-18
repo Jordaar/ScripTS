@@ -15,7 +15,7 @@ module.exports = {
     name: "github",
     aliases: ["git"],
     category: "Search",
-    description: "Searches through [Github](https://github.com/about).",
+    description: "Searches [Github](https://github.com/about).",
     usage: `<query> [${flags.join(" | ")}]`,
     cooldown: 10,
     execute
