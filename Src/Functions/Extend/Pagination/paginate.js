@@ -51,7 +51,7 @@ async function paginate(message, embeds) {
                 instance.setPage(embeds.length);
             }
         })
-    await m.build().catch(e => { console.log(e) });
+    await m.build().catch(e => { });
     return m;
 }
 

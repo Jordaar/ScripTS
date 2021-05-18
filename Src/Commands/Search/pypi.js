@@ -5,7 +5,7 @@ const moment = require("moment");
 module.exports = {
     name: "pypi",
     category: "Search",
-    description: "Search for [pypi](https://pypi.org) projects.",
+    description: "Searches [PYPI](https://pypi.org) projects.",
     usage: "<projectName>",
     cooldown: 10,
     execute
