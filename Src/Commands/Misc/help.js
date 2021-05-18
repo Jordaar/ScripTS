@@ -9,25 +9,29 @@ module.exports = {
     execute: execute
 }
 
+let commands = {};
+let url = null;
+
 async function execute(client, message, args, instance) {
     const prefix = client.prefix.get(message.guild.id);
-    const url = `https://google.com`
+    if (!url) url = await client.generateInvite({ permissions: ["ATTACH_FILES", "ADD_REACTIONS", "SEND_MESSAGES", "EMBED_LINKS"] })
 
-    let commands = {};
-    client.commands.forEach((cmd) => {
-        commands[cmd.category] ? commands[cmd.category].push(cmd) : commands[cmd.category] = [cmd];
-    });
+    if (Object.keys(commands).length === 0) {
+        client.commands.map(x => x).filter(c => c.enabled !== false).forEach((cmd) => {
+            commands[cmd.category] ? commands[cmd.category].push(cmd) : commands[cmd.category] = [cmd];
+        });
+    }
 
     const helpMenu = new MessageEmbed()
         .setColor("#191A26")
         .setAuthor(message.member.displayName, message.author.displayAvatarURL())
-        .setDescription(`Hey there 👋. I am ${client.user.username}.\nRun ${prefix}help <commandName> for info about each command.`);
+        .setDescription(`Hey there 👋. I am **${client.user.username}**.\nRun ${prefix}help <commandName> for info about each command.`);
 
     Object.keys(commands).forEach((c) => {
         const cmd = commands[c];
         helpMenu.addField(`${c} Commands`, `>>> ${cmd.map((c) => `[${prefix}${c.name}](${url}) **-** ${c.description}`).join("\n")}`)
     });
-
+     
     if (!args[0]) {
         instance.send(message, helpMenu, "embed");
     }

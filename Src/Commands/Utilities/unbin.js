@@ -41,7 +41,7 @@ module.exports = {
 async function execute(client, message, args, instance) {
     if (!args[0]) return instance.send(message, instance.embed(`Please provide a source code sharing website url. Supports: ${bins.map(b => `[${b.name}](${b.url})`).join(", ")}.`, "error"), "embed")
     const bin = await findAndRun(message.text);
-    if (!bin.status) return instance.send(message, instance.embed(`Un-supported code sharing website url. Supports: ${bins.map(b => `[${b.name}](${b.url})`).join(", ")}.`, "error"), "embed")
+    if (!bin.status) return instance.send(message, instance.embed(`Un-supported code sharing website url. Supported: ${bins.map(b => `[${b.name}](${b.url})`).join(", ")}.`, "error"), "embed")
     bin.data.forEach(b => {
         message.channel.send(...b)
     });

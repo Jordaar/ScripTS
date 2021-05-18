@@ -8,6 +8,7 @@ module.exports = {
     description: "Used to create custom commands in the server.",
     usage: "<arg>",
     cooldown: 10,
+    enabled: false,
     execute
 }
 
