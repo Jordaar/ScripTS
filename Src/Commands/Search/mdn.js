@@ -6,7 +6,7 @@ const API_BASE = 'https://developer.mozilla.org';
 module.exports = {
     name: "mdn",
     category: "Search",
-    description: "Searches [MDN](https://developer.mozilla.org) docs.",
+    description: "Searches thorugh [mdn](https://developer.mozilla.org) docs.",
     usage: "<query>",
     cooldown: 10,
     execute
@@ -21,7 +21,7 @@ async function execute(client, message, args, instance) {
     let embeds = [];
     const embed = new MessageEmbed()
         .setAuthor("MDN Documentation", "https://iili.io/BufHXt.jpg", "https://developer.mozilla.org")
-        .setColor("#A19B9B")
+        .setColor("#F9F8F8")
         .setTitle("Contents")
         .setURL(`${API_BASE}/search?q=${encodeURI(message.text)}`)
         .setDescription(res.documents.slice(0, 15).map((d, i) => `\`${++i})\` [${d.title}](${API_BASE}${d.mdn_url})`).join("\n"));

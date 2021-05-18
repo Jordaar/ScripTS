@@ -21,8 +21,6 @@ async function load() {
     client.on("ready", () => {
         console.log(chalk.green("API > Connected"))
 
-        client.user.setPresence(config.status)
-
         const functions = loadFunctions(client);
         if (functions) {
             console.log(chalk.magenta(`Process > Loaded All Functions`))

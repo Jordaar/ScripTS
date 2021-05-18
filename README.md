@@ -1,27 +1,73 @@
-# ScripTS Bot
-This is a bot was made for [Worn Off Keys](https://wornoffkeys.com/discord) programming competition, based on programmin theme.
+# .env Format
 
-This Bot is open sourced under the MIT License.
+```
+TOKEN=BOT_TOKEN
+MONGO_DB=MONGO_URL
+```
 
-# ScripTS API
+# [Command Base Layout](https://github.com/Jordaar/ScripTS/blob/master/Src/Commands/!Base.js)
 
-**Base Url** - https://api.scripts-bot.cf
+```js
+const { Client, Message } = require("discord.js");
 
-**Important Note** - While the api is and always will public, please don't abuse it.
+module.exports = {
+    name: "example",
+    category: "Category",
+    description: "Command Description",
+    usage: "Command Usage",
+    enabled: true,               //Optional (default: true)
+    botPermissions: [],          //Optional (default: ["SEND_MESSAGES" , "EMBED_LINKS"])
+    memberPermissions: [],       //Optional (default: [])
+    ownerOnly: false,            //Optional (default: false)
+    cooldown: 0,                 //Optional (default: 0 [in seconds])
+    execute: execute
+}
 
+// I like this format, makes the code look cleaner & intellisense helps a lot
+// Also command files starting with "!" are ignored, like this one
 
-|    Routes    | Query String Params| Description   | Preview |
-|--|--|--|--|
-| /npm | `package` - Name of the npm package. | Generates download stats chart of a npm package. | [Click Here](https://api.scripts-bot.cf/npm?package=axios) |
-|/github-repo | `repo` - The github repository name.<br/>`username` - The owner of the repository.<br/>`....` - [other options](https://github.com/anuraghazra/github-readme-stats#common-options). | Generates a beautiful github repo card. | [Click Here](https://api.scripts-bot.cf/github-repo?username=discordjs&repo=discord.js)
-|/github-contribution | `user` - The github user login name.<br/>`theme` - (optional) [themes](https://github.com/sallar/github-contributions-canvas#available-themes). | Generates github user contribution image. | [Click Here](https://api.scripts-bot.cf/github-contribution?user=Jordaar)
-| /github-contribution/graph | `user` - The github user login name.<br/>`theme` - (optional) react or dark. | Generates a line graph of the user's contributions. | [Click Here](https://api.scripts-bot.cf/github-contribution/graph?user=Jordaar)
-| /code-snippet | `code` - A code snippet string. | Generates an image, useful for sharing code snipppets. | [Click Here](https://api.scripts-bot.cf/code-snippet?code=console.log(%22Hello%20World%22))
+/**
+ * 
+ * @param {Client} client 
+ * @param {Message} message 
+ * @param {Array} args 
+ * @param {String} text 
+ * @param {*} instance 
+ */
 
+async function execute(client, message, args, text, instance) {
+    const { guild, channel, author, member } = message; //Please use destructuring, makes the code look clean
 
-## Author
+    channel.send("Test") // Without auto edit functionality
+    instance.send() // With auto edit functionality
 
-**ScripTS Bot** © [ScripTS](https://github.com/Jordaar/ScripTS/graphs/contributors).  
-Authored and maintained by Jordaar & contributors.
+    /*
+    message --> messageObject
+    payload --> can be MessageEmbed or normal string(message)  
+    type --> is the type of the payload
+    example --> 
+    instance.send("Hello World" , "string")
+    instance.send(embed , "embed")
+    returns messageObject of the edited message
+    */
+    instance.send(message, payload, type)
 
-> GitHub [@Jordaar](https://github.com/Jordaar)
+    /*
+    text --> string (normal message)
+    type --> is shows the type of embed
+    example -->
+    instance.embed("Success Embed" , "success")
+    instance.embed("Error Embed" , "error")
+    instance.embed("Info Embed" , "info")
+    returns MessageEmbed
+    */
+    instance.embed(text, type)
+
+    /*
+    message --> messageObject
+    embeds --> array of embeds
+    returns paginationObject // refer www.npmjs.com/package/discord-paginationembed
+    */
+    instance.paginate(message , embeds)
+}
+```

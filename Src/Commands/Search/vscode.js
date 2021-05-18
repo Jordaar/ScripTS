@@ -1,4 +1,4 @@
-const { MessageEmbed  , Collection} = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const axios = require("axios");
 const moment = require("moment");
 
@@ -12,23 +12,13 @@ module.exports = {
     execute: execute
 }
 
-const cache = new Collection();
 async function execute(client, message, args, instance) {
     if (!args[0]) return instance.send(message, instance.embed("Please provide a extension name to search.", "error"), "embed");
-    const loading = await instance.send(message, instance.embed("Finding the extension, please wait.", "loading"), "embed");
 
-    let res = { status: false };
-    if (cache.has(message.text.toLowerCase())) {
-        res = cache.get(message.text.toLowerCase())
-    }
-    else {
-        res = await getExtension(message.text);
-        cache.set(message.text.toLowerCase(), res);
-    }
-    
-    if (!res.status) return loading.edit(instance.embed("An error occured while processing your request.", "error"));
-    if (res.results.length == 0) return loading.edit(instance.embed("Unble to find any search results for the given query.", "error"));
-    if (res.results[0].extensions.length == 0) return loading.edit(instance.embed("Unble to find any search results for the given query.", "error"));
+    const res = await getExtension(message.text);
+    if (!res.status) return instance.send(message, instance.embed("An error occured while processing your request.", "error"), "embed");
+    if (res.results.length == 0) return instance.send(message, instance.embed("Unble to find any search results for the given query.", "error"), "embed");
+    if (res.results[0].extensions.length == 0) return instance.send(message, instance.embed("Unble to find any search results for the given query.", "error"), "embed");
     const extension = res.results[0].extensions[0];
 
     const embed = new MessageEmbed()
@@ -51,7 +41,7 @@ async function execute(client, message, args, instance) {
     }
     embed.addField("Statistics", stats.map(x => `> ${x}`).join("\n") || "None", false);
 
-    loading.edit(embed)
+    instance.send(message, embed, "embed")
 }
 
 async function getExtension(query) {

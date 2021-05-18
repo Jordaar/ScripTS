@@ -93,6 +93,5 @@ module.exports = {
     send: send,
     embed: embed,
     paginate: require("./Pagination/paginate"),
-    prompt: require("./Utils/prompt"),
-    parseFlags: require("./Utils/parseFlags")
+    prompt: require("./Utils/prompt")
 }
