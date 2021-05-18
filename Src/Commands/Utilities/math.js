@@ -36,11 +36,11 @@ const mathEvaluate = (expression) => {
 
 module.exports = {
     name: "math",
-    category: "Utilities",
+    category: "Utility",
     description: "Evaluate mathematical expressions and equations.",
     cooldown: 10,
     usage: "<mathematical-expressions>",
-    aliases: ['mathevaluate', "math-eval", "maths"],
+    aliases: ["maths"],
     execute: execute
 }
 
