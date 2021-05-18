@@ -24,5 +24,12 @@ module.exports = {
             "info": "#7289DA",
             "loading": "#2F303A"
         }
+    },
+    status: {
+        "status": "online",
+        "activity": {
+            "name": `@ScripTS help`,
+            "type": "PLAYING"
+        }
     }
 }

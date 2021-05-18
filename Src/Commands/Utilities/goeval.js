@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 
 module.exports = {
     name: "goeval",
-    category: "Utilities",
+    category: "Utility",
     description: "Sanitized public eval command, evaluates golang code.",
     cooldon: 10,
     usage: "<code>",

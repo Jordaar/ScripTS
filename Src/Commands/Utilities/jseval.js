@@ -17,7 +17,7 @@ const chunk = (array, chunkSize = 2000) => {
 
 module.exports = {
     name: "jseval",
-    category: "Utilities",
+    category: "Utility",
     description: "Sanitized public eval command, evaluates javascript code.",
     cooldon: 10,
     usage: "<code>",
