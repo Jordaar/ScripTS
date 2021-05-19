@@ -1,3 +1,5 @@
+[![Visitors](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FJordaar%2FScripTS&count_bg=%2379C83D&title_bg=%23474343&icon=&icon_color=%23FFFFFF&title=Visitors&edge_flat=false)](https://hits.seeyoufarm.com)
+
 # ScripTS Bot
 This is a bot was made for [Worn Off Keys](https://wornoffkeys.com/discord) programming competition, based on programming theme.
 
