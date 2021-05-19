@@ -1,5 +1,5 @@
 # ScripTS Bot
-This is a bot was made for [Worn Off Keys](https://wornoffkeys.com/discord) programming competition, based on programmin theme.
+This is a bot was made for [Worn Off Keys](https://wornoffkeys.com/discord) programming competition, based on programming theme.
 
 This Bot is open sourced under the MIT License.
 
@@ -7,7 +7,7 @@ This Bot is open sourced under the MIT License.
 
 **Base Url** - https://api.scripts-bot.cf
 
-**Important Note** - While the api is and always will public, please don't abuse it.
+**Important Note** - While the api is and always will be public, please don't abuse it.
 
 
 |    Routes    | Query String Params| Description   | Preview |
