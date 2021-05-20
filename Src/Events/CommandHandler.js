@@ -14,12 +14,14 @@ const cooldown = new Set();
 
 module.exports = async (client) => {
 
-    const guildConfig = await guildSchema.find({});
+    setTimeout(async () => {
+        const guildConfig = await guildSchema.find({});
 
-    client.guilds.cache.forEach((guild) => {
-        const thisGuild = guildConfig.find(g => g.guildId == guild.id);
-        client.prefix.set(guild.id, thisGuild ? thisGuild.prefix : config.prefix);
-    })
+        client.guilds.cache.forEach((guild) => {
+            const thisGuild = guildConfig.find(g => g.guildId == guild.id);
+            client.prefix.set(guild.id, thisGuild ? thisGuild.prefix : config.prefix);
+        })
+    }, 1000 * 60);
 
     client.on("message", (message) => {
         const { author, channel, guild, content, member } = message;
@@ -29,7 +31,8 @@ module.exports = async (client) => {
         if (!guild) return;
 
         const mentionRegex = new RegExp(`^<@!?${client.user.id}> `);
-        const prefix = content.match(mentionRegex) ? content.match(mentionRegex)[0] : client.prefix.get(guild.id) || config.prefix;
+        let prefix = content.match(mentionRegex) ? content.match(mentionRegex)[0] : client.prefix.get(guild.id) || config.prefix;
+        if (!prefix) prefix = config.prefix;
         if (!content.toLowerCase().startsWith(prefix)) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
@@ -111,7 +114,8 @@ module.exports = async (client) => {
         const { author, channel, guild, content } = message;
         if (!content) return;
         const mentionRegex = new RegExp(`^<@!?${client.user.id}> `);
-        const prefix = content.match(mentionRegex) ? content.match(mentionRegex)[0] : client.prefix.get(guild.id) || config.prefix;
+        let prefix = content.match(mentionRegex) ? content.match(mentionRegex)[0] : client.prefix.get(guild.id) || config.prefix;
+        if (!prefix) prefix = config.prefix;
         if (!content.toLowerCase().startsWith(prefix)) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
