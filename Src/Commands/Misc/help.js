@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const prettyMs = require("pretty-ms");
+const config = require("../../../config");
 
 module.exports = {
     name: "help",
@@ -13,7 +14,8 @@ let commands = {};
 let url = null;
 
 async function execute(client, message, args, instance) {
-    const prefix = client.prefix.get(message.guild.id);
+    let prefix = client.prefix.get(message.guild.id);
+    if(!prefix) prefix = config.prefix;
     if (!url) url = await client.generateInvite({ permissions: ["ATTACH_FILES", "ADD_REACTIONS", "SEND_MESSAGES", "EMBED_LINKS"] })
 
     if (Object.keys(commands).length === 0) {
@@ -29,7 +31,7 @@ async function execute(client, message, args, instance) {
 
     Object.keys(commands).forEach((c) => {
         const cmd = commands[c];
-        helpMenu.addField(`${c} Commands`, `>>> ${cmd.map((c) => `[${prefix}${c.name}](${url}) **-** ${c.description.slice(0 , 10)} ...`).join("\n")}`)
+        helpMenu.addField(`${c} Commands`, `>>> ${cmd.map((c) => `[${prefix}${c.name}](${url}) **-** ${c.description}`).join("\n")}`)
     });
      
     if (!args[0]) {

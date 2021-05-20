@@ -14,14 +14,11 @@ const cooldown = new Set();
 
 module.exports = async (client) => {
 
-    setTimeout(async () => {
-        const guildConfig = await guildSchema.find({});
-
-        client.guilds.cache.forEach((guild) => {
-            const thisGuild = guildConfig.find(g => g.guildId == guild.id);
-            client.prefix.set(guild.id, thisGuild ? thisGuild.prefix : config.prefix);
-        })
-    }, 1000 * 60);
+    const guildConfig = await guildSchema.find({});
+    client.guilds.cache.forEach((guild) => {
+        const thisGuild = guildConfig.find(g => g.guildId == guild.id);
+        client.prefix.set(guild.id, thisGuild ? thisGuild.prefix : config.prefix);
+    })
 
     client.on("message", (message) => {
         const { author, channel, guild, content, member } = message;
@@ -31,10 +28,10 @@ module.exports = async (client) => {
         if (!guild) return;
 
         const mentionRegex = new RegExp(`^<@!?${client.user.id}> `);
-        let prefix = content.match(mentionRegex) ? content.match(mentionRegex)[0] : client.prefix.get(guild.id) || config.prefix;
+        let prefix = content.match(mentionRegex) ? content.match(mentionRegex)[0] : client.prefix.get(guild.id) ? client.prefix.get(guild.id) : config.prefix;
         if (!prefix) {
             prefix = config.prefix;
-            client.prefix.set(guild.id , config.prefix);
+            client.prefix.set(guild.id, config.prefix);
         }
         if (!content.toLowerCase().startsWith(prefix)) return;
 
@@ -117,7 +114,7 @@ module.exports = async (client) => {
         const { author, channel, guild, content } = message;
         if (!content) return;
         const mentionRegex = new RegExp(`^<@!?${client.user.id}> `);
-        let prefix = content.match(mentionRegex) ? content.match(mentionRegex)[0] : client.prefix.get(guild.id) || config.prefix;
+        let prefix = content.match(mentionRegex) ? content.match(mentionRegex)[0] : client.prefix.get(guild.id) ? client.prefix.get(guild.id) : config.prefix;
         if (!prefix) prefix = config.prefix;
         if (!content.toLowerCase().startsWith(prefix)) return;
 
