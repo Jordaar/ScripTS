@@ -29,7 +29,7 @@ async function execute(client, message, args, instance) {
 
     Object.keys(commands).forEach((c) => {
         const cmd = commands[c];
-        helpMenu.addField(`${c} Commands`, `>>> ${cmd.map((c) => `[${prefix}${c.name}](${url}) **-** ${c.description}`).join("\n")}`)
+        helpMenu.addField(`${c} Commands`, `>>> ${cmd.map((c) => `[${prefix}${c.name}](${url}) **-** ${c.description.slice(0 , 10)} ...`).join("\n")}`)
     });
      
     if (!args[0]) {
