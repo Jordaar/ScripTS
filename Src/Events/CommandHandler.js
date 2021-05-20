@@ -32,7 +32,10 @@ module.exports = async (client) => {
 
         const mentionRegex = new RegExp(`^<@!?${client.user.id}> `);
         let prefix = content.match(mentionRegex) ? content.match(mentionRegex)[0] : client.prefix.get(guild.id) || config.prefix;
-        if (!prefix) prefix = config.prefix;
+        if (!prefix) {
+            prefix = config.prefix;
+            client.prefix.set(guild.id , config.prefix);
+        }
         if (!content.toLowerCase().startsWith(prefix)) return;
 
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
